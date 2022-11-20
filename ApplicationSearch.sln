@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32319.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationSearch.Models", "ApplicationSearch.Models\ApplicationSearch.Models.csproj", "{52C0F91D-17E0-478F-95C7-05EC9A076FA1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationSearch.Services", "ApplicationSearch.Services\ApplicationSearch.Services.csproj", "{7F0BE5F2-078E-4D31-AFA8-609F9E71377A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationSearch.Api", "ApplicationSearch.Api\ApplicationSearch.Api.csproj", "{9799BA75-F60A-4C4D-901B-DE1E1F881FAB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{C7FF2C10-57A4-4A0A-A24C-ADB10BF85041}"
+	ProjectSection(SolutionItems) = preProject
+		README.markdown = README.markdown
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{52C0F91D-17E0-478F-95C7-05EC9A076FA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52C0F91D-17E0-478F-95C7-05EC9A076FA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52C0F91D-17E0-478F-95C7-05EC9A076FA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52C0F91D-17E0-478F-95C7-05EC9A076FA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F0BE5F2-078E-4D31-AFA8-609F9E71377A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F0BE5F2-078E-4D31-AFA8-609F9E71377A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F0BE5F2-078E-4D31-AFA8-609F9E71377A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F0BE5F2-078E-4D31-AFA8-609F9E71377A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9799BA75-F60A-4C4D-901B-DE1E1F881FAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9799BA75-F60A-4C4D-901B-DE1E1F881FAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9799BA75-F60A-4C4D-901B-DE1E1F881FAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9799BA75-F60A-4C4D-901B-DE1E1F881FAB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F3E8EE5D-95E1-42CB-A605-0A735E733754}
+	EndGlobalSection
+EndGlobal
