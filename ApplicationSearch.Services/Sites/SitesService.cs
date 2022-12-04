@@ -111,10 +111,13 @@ namespace ApplicationSearch.Services.Sites
 
                     return await GetPage(page.Id);
                 }
+            }
 
-                var temporaryDatabasePage = await _db.Pages.Where(x => x.Id == page.Id && x.Url.ToLower().Trim() == page.Url.ToLower().Trim()).FirstOrDefaultAsync();
+            if (page.SiteId != Guid.Empty)
+            {
+                var temporaryPage = await _db.Pages.Where(x => x.SiteId == page.SiteId && x.Url.ToLower().Trim() == page.Url.ToLower().Trim()).FirstOrDefaultAsync();
 
-                if (temporaryDatabasePage != null)
+                if (temporaryPage != null)
                 {
                     await UpdatePage(page);
 
