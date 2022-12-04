@@ -24,14 +24,14 @@ public static class Pages
             return await sitesService.GetPage(id) is PageViewModel page ? Results.Ok(page) : Results.NotFound();
         };
 
-        static async Task<IResult> Insert(ISitesService sitesService, [AsParameters] Page page)
+        static async Task<IResult> Insert(ISitesService sitesService, Page page)
         {
             await sitesService.InsertPage(page);
 
             return Results.Created($"/pages/{page.Id}", page);
         };
 
-        static async Task<IResult> Update(ISitesService sitesService, [AsParameters] Page page)
+        static async Task<IResult> Update(ISitesService sitesService, Page page)
         {
             await sitesService.UpdatePage(page);
 
