@@ -101,6 +101,18 @@ namespace ApplicationSearch.Services.Sites
 
         public async Task<PageViewModel> InsertPage(Page page)
         {
+            if (page.Id != Guid.Empty)
+            {
+                var temporaryPage = await GetPage(page.Id);
+
+                if (temporaryPage != null)
+                {
+                    await UpdatePage(page);
+
+                    return await GetPage(page.Id);
+                }
+            }
+
             _db.Pages.Add(page);
 
             await _db.SaveChangesAsync();
