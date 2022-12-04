@@ -103,7 +103,7 @@ namespace ApplicationSearch.Services.Sites
         {
             if (page.Id != Guid.Empty)
             {
-                var temporaryPage = await GetPage(page.Id);
+                var temporaryPage = await _db.Pages.Where(x => x.Id == page.Id).FirstOrDefaultAsync();
 
                 if (temporaryPage != null)
                 {
