@@ -15,6 +15,8 @@ public static class Cache
 
         group.MapGet("/get", Get);
 
+        group.MapGet("/scan", Scan);
+
         group.MapDelete("/delete", Delete);
 
         static async Task<IResult> Set(ICacheService cacheService, string key, ResultViewModel value)
@@ -37,6 +39,13 @@ public static class Cache
                 return Results.Ok(value);
             }
         };
+
+        static IResult Scan(ICacheService cacheService, string pattern)
+        {
+            var results = cacheService.Scan(pattern);
+
+            return Results.Ok(results);
+        }
 
         static async Task<IResult> Delete(ICacheService cacheService, string key)
         {

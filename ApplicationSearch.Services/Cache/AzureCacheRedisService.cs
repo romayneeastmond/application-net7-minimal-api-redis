@@ -23,7 +23,7 @@ namespace ApplicationSearch.Services.Cache
 
         public static int RetryMaxAttempts => 5;
 
-        public static string CacheConnection { get; set; }
+        public static string CacheConnection { get; set; } = string.Empty;
 
         private static Lazy<ConnectionMultiplexer> lazyConnection = CreateConnection();
 

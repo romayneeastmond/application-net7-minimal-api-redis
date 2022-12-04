@@ -5,6 +5,8 @@ using ApplicationSearch.Services.Sites;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var cacheConnectionString = BuilderHelper.GetConfigurationString("CacheConnection", builder);
+
 builder.Services.AddDbContext<SitesDbContext>(
     options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("SitesDbString"),
@@ -13,7 +15,7 @@ builder.Services.AddDbContext<SitesDbContext>(
 );
 
 builder.Services.AddScoped<ISitesDbContext>(provider => provider.GetService<SitesDbContext>()!);
-builder.Services.AddTransient<ICacheService>(x => new CacheService(builder.Configuration["CacheConnection"].ToString()));
+builder.Services.AddTransient<ICacheService>(x => new CacheService(cacheConnectionString));
 builder.Services.AddTransient<ISitesService, SitesService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>

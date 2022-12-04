@@ -24,6 +24,8 @@
 
         public List<string> QueryStrings { get; set; } = new List<string>();
 
+        public List<string> Connections { get; set; } = new List<string>();
+
         public string Content { get; set; } = string.Empty;
     }
 
