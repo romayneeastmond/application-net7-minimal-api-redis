@@ -33,7 +33,7 @@ namespace ApplicationSearch.Services.Sites
                 Sources = siteSources.Select(x => new SiteSourceViewModel
                 {
                     Id = x.Id,
-                    SiteId= x.SiteId,
+                    SiteId = x.SiteId,
                     Url = x.Url,
                     Created = x.Created,
                 }).ToList()
@@ -111,6 +111,15 @@ namespace ApplicationSearch.Services.Sites
 
                     return await GetPage(page.Id);
                 }
+
+                var temporaryDatabasePage = await _db.Pages.Where(x => x.Id == page.Id && x.Url.ToLower().Trim() == page.Url.ToLower().Trim()).FirstOrDefaultAsync();
+
+                if (temporaryDatabasePage != null)
+                {
+                    await UpdatePage(page);
+
+                    return await GetPage(page.Id);
+                }
             }
 
             _db.Pages.Add(page);
@@ -145,7 +154,7 @@ namespace ApplicationSearch.Services.Sites
             }
 
             siteSourceItem.SiteId = siteSource.SiteId;
-            siteSourceItem.Url = siteSource.Url;            
+            siteSourceItem.Url = siteSource.Url;
 
             await _db.SaveChangesAsync();
         }
@@ -162,7 +171,7 @@ namespace ApplicationSearch.Services.Sites
             pageItem.SiteId = page.SiteId;
             pageItem.Url = page.Url;
             pageItem.Html = page.Html;
-            pageItem.Content= page.Content;
+            pageItem.Content = page.Content;
             pageItem.Modified = DateTime.Now;
 
             await _db.SaveChangesAsync();
