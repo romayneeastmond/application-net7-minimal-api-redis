@@ -19,7 +19,7 @@ namespace ApplicationSearch.Services.Cache
 
                 _cache = AzureCacheRedisService.GetDatabase();
                 _endPoints = AzureCacheRedisService.GetEndPoints();
-                
+
                 GetServer();
             }
             catch

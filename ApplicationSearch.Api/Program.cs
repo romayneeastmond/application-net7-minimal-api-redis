@@ -1,7 +1,8 @@
-using Microsoft.EntityFrameworkCore;
 using ApplicationSearch.Models;
 using ApplicationSearch.Services.Cache;
+using ApplicationSearch.Services.Search;
 using ApplicationSearch.Services.Sites;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<SitesDbContext>(
 
 builder.Services.AddScoped<ISitesDbContext>(provider => provider.GetService<SitesDbContext>()!);
 builder.Services.AddTransient<ICacheService>(x => new CacheService(cacheConnectionString));
+builder.Services.AddTransient<ISearchService, SearchService>();
 builder.Services.AddTransient<ISitesService, SitesService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -37,6 +39,7 @@ app.MapGet("/", () =>
     return "Search Results on .NET 7 Framework";
 });
 
+app.AddRoutesSearch();
 app.AddRoutesSites();
 app.AddRoutesPages();
 app.AddRoutesCache();
