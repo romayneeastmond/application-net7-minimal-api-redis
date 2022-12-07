@@ -119,6 +119,8 @@ namespace ApplicationSearch.Services.Sites
 
                 if (temporaryPage != null)
                 {
+                    page.Id = temporaryPage.Id;
+
                     await UpdatePage(page);
 
                     return await GetPage(page.Id);
