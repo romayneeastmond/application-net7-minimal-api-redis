@@ -19,9 +19,23 @@ public static class Pages
 
         group.MapDelete("/delete", Delete);
 
+        group.MapGet("/urls", GetUrls);
+
+        group.MapPost("/urls/complement", GetUrlsByComplement);
+
         static async Task<IResult> Get(ISitesService sitesService, Guid id)
         {
             return await sitesService.GetPage(id) is PageViewModel page ? Results.Ok(page) : Results.NotFound();
+        };
+
+        static async Task<IResult> GetUrls(ISitesService sitesService, Guid siteId)
+        {
+            return await sitesService.GetPageUrls(siteId) is List<string> urls ? Results.Ok(urls) : Results.NotFound();
+        };
+
+        static async Task<IResult> GetUrlsByComplement(ISitesService sitesService, Guid siteId, List<string> urls)
+        {
+            return await sitesService.GetPageUrls(siteId, urls) is List<string> complementUrls ? Results.Ok(complementUrls) : Results.Ok(urls);
         };
 
         static async Task<IResult> Insert(ISitesService sitesService, Page page)

@@ -81,6 +81,32 @@ namespace ApplicationSearch.Services.Sites
             };
         }
 
+        public async Task<List<string>> GetPageUrls(Guid siteId)
+        {
+            var pages = await _db.Pages.Where(x => x.SiteId == siteId).ToListAsync();
+
+            if (pages.Any())
+            {
+                return pages.Select(x => x.Url).Distinct().ToList();
+            }
+
+            return new List<string>();
+        }
+
+        public async Task<List<string>> GetPageUrls(Guid siteId, List<string> urls)
+        {
+            var pages = await _db.Pages.Where(x => x.SiteId == siteId).ToListAsync();
+
+            if (!pages.Any())
+            {
+                return urls;
+            }
+
+            var pagesUrls = pages.Select(x => x.Url).Distinct().ToList();
+
+            return urls.Where(x => !pagesUrls.Contains(x, StringComparer.OrdinalIgnoreCase)).ToList();
+        }
+
         public async Task<SiteViewModel> Insert(Site site)
         {
             _db.Sites.Add(site);

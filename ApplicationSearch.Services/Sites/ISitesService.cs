@@ -11,6 +11,10 @@ namespace ApplicationSearch.Services.Sites
 
         Task<PageViewModel> GetPage(Guid id);
 
+        Task<List<string>> GetPageUrls(Guid siteId);
+
+        Task<List<string>> GetPageUrls(Guid siteId, List<string> urls);
+
         Task<SiteViewModel> Insert(Site site);
 
         Task<SiteSourceViewModel> InsertSiteSource(SiteSource siteSource);
