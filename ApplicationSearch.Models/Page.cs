@@ -13,6 +13,8 @@ namespace ApplicationSearch.Models
 
         public string Html { get; set; } = string.Empty;
 
+        public string Title { get; set; } = string.Empty;
+
         public string Content { get; set; } = string.Empty;
 
         public required DateTime Created { get; set; }

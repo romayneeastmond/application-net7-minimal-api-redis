@@ -75,6 +75,7 @@ namespace ApplicationSearch.Services.Sites
                 SiteId = page.SiteId,
                 Url = page.Url,
                 Html = page.Html,
+                Title = page.Title,
                 Content = page.Content,
                 Created = page.Created,
                 Modified = page.Modified
@@ -202,6 +203,7 @@ namespace ApplicationSearch.Services.Sites
             pageItem.SiteId = page.SiteId;
             pageItem.Url = page.Url;
             pageItem.Html = page.Html;
+            pageItem.Title = page.Title;
             pageItem.Content = page.Content;
             pageItem.Modified = DateTime.Now;
 
