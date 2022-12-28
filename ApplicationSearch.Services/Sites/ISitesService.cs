@@ -27,6 +27,10 @@ namespace ApplicationSearch.Services.Sites
 
         Task UpdatePage(Page page);
 
+        Task RebuildPages(Guid siteId, string endPointUrl);
+
+        Task RebuildPages(Guid siteId, string endPointUrl, int count);
+
         Task Delete(Guid id);
 
         Task DeleteSiteSource(Guid id);

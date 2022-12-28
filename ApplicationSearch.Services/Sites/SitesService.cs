@@ -210,6 +210,56 @@ namespace ApplicationSearch.Services.Sites
             await _db.SaveChangesAsync();
         }
 
+        public async Task RebuildPages(Guid siteId, string endPointUrl)
+        {
+            var batchSize = 1000;
+            var count = await _db.Pages.CountAsync();
+
+            for (int i = 0; i < count; i += batchSize)
+            {
+                var batch = await _db.Pages.Where(x => x.SiteId == siteId).OrderBy(x => x.Modified).Skip(i).Take(batchSize).Select(x => new
+                {
+                    x.Id,
+                    x.SiteId,
+                    x.Url,
+                    Body = x.Html
+                }).ToListAsync();
+
+                if (batch.Any())
+                {
+                    foreach (var page in batch)
+                    {
+                        var backgroundTask = Task.Run(() =>
+                        {
+                            SitesHttpClientHelper.PostData(page, endPointUrl);
+                        });
+                    }
+                }
+            }
+        }
+
+        public async Task RebuildPages(Guid siteId, string endPointUrl, int count)
+        {
+            var pages = await _db.Pages.Where(x => x.SiteId == siteId).OrderBy(x => x.Modified).Take(count).Select(x => new
+            {
+                x.Id,
+                x.SiteId,
+                x.Url,
+                Body = x.Html
+            }).ToListAsync();
+
+            if (pages.Any())
+            {
+                foreach (var page in pages)
+                {
+                    var backgroundTask = Task.Run(() =>
+                    {
+                        SitesHttpClientHelper.PostData(page, endPointUrl);
+                    });
+                }
+            }
+        }
+
         public async Task Delete(Guid id)
         {
             var site = await _db.Sites.FindAsync(id);

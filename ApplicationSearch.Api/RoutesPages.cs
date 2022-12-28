@@ -23,6 +23,8 @@ public static class Pages
 
         group.MapPost("/urls/complement", GetUrlsByComplement);
 
+        group.MapPost("/rebuild/cache", RebuildPages);
+
         static async Task<IResult> Get(ISitesService sitesService, Guid id)
         {
             return await sitesService.GetPage(id) is PageViewModel page ? Results.Ok(page) : Results.NotFound();
@@ -58,5 +60,12 @@ public static class Pages
 
             return Results.StatusCode(204);
         };
+
+        static async Task<IResult> RebuildPages(ISitesService sitesService, Guid siteId, string endPointUrl)
+        {
+            await sitesService.RebuildPages(siteId, endPointUrl);
+
+            return Results.StatusCode(204);
+        }
     }
 }
