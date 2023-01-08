@@ -82,6 +82,13 @@ namespace ApplicationSearch.Services.Sites
             };
         }
 
+        public async Task<int> GetPagesCount(Guid siteId)
+        {
+            var count = await _db.Pages.Where(x => x.SiteId == siteId).CountAsync();
+
+            return count;
+        }
+
         public async Task<List<string>> GetPageUrls(Guid siteId)
         {
             var pages = await _db.Pages.Where(x => x.SiteId == siteId).ToListAsync();

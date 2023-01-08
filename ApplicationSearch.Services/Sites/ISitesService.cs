@@ -11,6 +11,8 @@ namespace ApplicationSearch.Services.Sites
 
         Task<PageViewModel> GetPage(Guid id);
 
+        Task<int> GetPagesCount(Guid siteId);
+
         Task<List<string>> GetPageUrls(Guid siteId);
 
         Task<List<string>> GetPageUrls(Guid siteId, List<string> urls);

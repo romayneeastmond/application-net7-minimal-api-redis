@@ -1,4 +1,6 @@
-﻿using StackExchange.Redis;
+﻿using ApplicationSearch.Services.ViewModels;
+using Newtonsoft.Json;
+using StackExchange.Redis;
 using System.Net;
 
 namespace ApplicationSearch.Services.Cache
@@ -62,6 +64,60 @@ namespace ApplicationSearch.Services.Cache
             return results;
         }
 
+        public int ScanCount(string pattern)
+        {
+            return _server.Keys(pattern: pattern).Count();
+        }
+
+        public async Task<List<ResultSummaryViewModel>> ScanList(string pattern, int startIndex, int pageSize)
+        {
+            var results = new List<ResultSummaryViewModel>();
+
+            var keys = Scan(pattern);
+
+            if (!keys.Any())
+            {
+                return results;
+            }
+
+            var orderedKeys = keys.Select(x => new
+            {
+                Key = $"{x.Substring(0, x.LastIndexOf("/") + 1)}{x.Substring(x.LastIndexOf("/") + 1)}",
+                Title = x.Substring(x.LastIndexOf("/") + 1)
+            }).OrderBy(x => x.Title).ToList();
+
+            orderedKeys = orderedKeys.OrderBy(x => x.Title).Skip(startIndex).Take(pageSize).ToList();
+
+            foreach (var key in orderedKeys)
+            {
+                var value = await Get(key.Key);
+
+                try
+                {
+                    var result = JsonConvert.DeserializeObject<ResultViewModel>(value);
+
+                    if (result == null)
+                    {
+                        continue;
+                    }
+
+                    results.Add(new ResultSummaryViewModel
+                    {
+                        Key = key.Key,
+                        Id = result.Id,
+                        SiteId = result.SiteId,
+                        Url = result.Url,
+                        Title = result.Title.Trim().Replace("\\t", "")
+                    });
+                }
+                catch
+                {
+                    //ignored
+                }
+            }
+
+            return results;
+        }
 
         public async Task Set(string key, string value)
         {

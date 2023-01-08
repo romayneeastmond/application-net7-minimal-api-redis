@@ -1,4 +1,6 @@
-﻿using ApplicationSearch.Services.Cache;
+﻿using ApplicationSearch.Models;
+using ApplicationSearch.Services.Cache;
+using ApplicationSearch.Services.Sites;
 using ApplicationSearch.Services.ViewModels;
 using Newtonsoft.Json;
 
@@ -15,7 +17,11 @@ public static class Cache
 
         group.MapGet("/get", Get);
 
+        group.MapGet("/list", ScanByList);
+
         group.MapGet("/scan", Scan);
+
+        group.MapGet("/scan/count", ScanCount);
 
         group.MapDelete("/delete", Delete);
 
@@ -43,6 +49,18 @@ public static class Cache
         static IResult Scan(ICacheService cacheService, string pattern)
         {
             var results = cacheService.Scan(pattern);
+
+            return Results.Ok(results);
+        }
+
+        static async Task<IResult> ScanByList(ICacheService cacheService, string pattern, int startIndex = 0, int pageSize = 10)
+        {
+            return await cacheService.ScanList(pattern, startIndex, pageSize) is List<ResultSummaryViewModel> results ? Results.Ok(results) : Results.NotFound();
+        }
+
+        static IResult ScanCount(ICacheService cacheService, string pattern)
+        {
+            var results = cacheService.ScanCount(pattern);
 
             return Results.Ok(results);
         }

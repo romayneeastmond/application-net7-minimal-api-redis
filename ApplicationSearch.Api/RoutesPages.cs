@@ -13,6 +13,8 @@ public static class Pages
 
         group.MapGet("/get", Get);
 
+        group.MapGet("/get/count", GetCount);
+
         group.MapPost("/insert", Insert);
 
         group.MapPut("/update", Update);
@@ -28,6 +30,11 @@ public static class Pages
         static async Task<IResult> Get(ISitesService sitesService, Guid id)
         {
             return await sitesService.GetPage(id) is PageViewModel page ? Results.Ok(page) : Results.NotFound();
+        };
+
+        static async Task<IResult> GetCount(ISitesService sitesService, Guid id)
+        {
+            return await sitesService.GetPagesCount(id) is int count ? Results.Ok(count) : Results.Ok(0);
         };
 
         static async Task<IResult> GetUrls(ISitesService sitesService, Guid siteId)
